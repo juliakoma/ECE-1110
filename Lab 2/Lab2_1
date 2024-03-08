@@ -1,0 +1,30 @@
+.data                   # Data segment
+i:  .word 0              # Initialize i to 0
+a:  .space 40            # Allocate space for an array a with 10 elements
+
+.text                   # Text segment
+.globl main
+
+main:
+    la $gp, a            # Load the base address of array a into $gp
+    li $t0, 0            # Initialize $t0 with 0 (i)
+    li $t1, 32           # Initialize $t1 with 32 (constant multiplier)
+
+loop:
+    bge $t0, 10, done    # Exit the loop if i >= 10
+    mul $t2, $t0, $t1    # Multiply i by 32
+    sw $t2, 0($gp)       # Store the result in a[i]
+    addi $t0, $t0, 1     # Increment i by 1
+    addi $gp, $gp, 4     # Move to the next element in array a
+    j loop               # Jump back to the beginning of the loop
+
+done:
+    li $v0, 10          
+    syscall              # exit the program
+
+
+
+
+
+
+

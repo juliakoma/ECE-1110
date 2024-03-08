@@ -1,0 +1,23 @@
+.data                   
+result: .word 0         # Space to store the result
+
+.text                   # Text segment
+.globl main
+
+main:
+    li $t0, 100          # Load the given integer (e.g., 100) into $t0
+    li $t1, 11           # Load the divisor (11) into $t1
+
+    div $t0, $t1         # Divide $t0 by $t1
+    mfhi $t2             # Get the remainder from $t2
+
+    sw $t2, result       # Store the remainder in the 'result' variable
+
+    # Printing the result
+    li $v0, 1            # Load syscall code for printing an integer
+    lw $a0, result       # Load the address of 'result'
+    syscall
+
+    # Exiting the program
+    li $v0, 10           
+    syscall
